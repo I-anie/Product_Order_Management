@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lumiera.shop.lumierashop.mapper.ProductDetailImageMapper">
+
+    <insert id="save">
+        INSERT INTO product_detail_images (product_id, image_url, sort_order)
+        VALUES
+        <foreach collection="productDetailImages" item="productDetailImage" separator=",">
+            (#{productDetailImage.productId}, #{productDetailImage.imageUrl}, #{productDetailImage.sortOrder})
+        </foreach>
+    </insert>
+
+    <select id="findByProductId" resultType="ProductDetailImage">
+        SELECT id, product_id, image_url, sort_order
+        FROM product_detail_images
+        WHERE product_id = #{productId}
+        ORDER BY sort_order
+    </select>
+
+    <delete id="deleteByProductId">
+        DELETE FROM product_detail_images
+        WHERE product_id IN
+        <foreach item="productId" collection="productIds" open="(" close=")" separator=",">
+            #{productId}
+        </foreach>
+    </delete>
+</mapper>

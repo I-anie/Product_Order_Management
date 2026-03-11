@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lumiera.shop.lumierashop.mapper.AuthMapper">
+
+    <select id="existsByUsername" resultType="boolean">
+        SELECT EXISTS (
+        SELECT 1
+        FROM users
+        WHERE username = #{username}
+        AND deleted_at IS NULL
+        )
+    </select>
+
+    <insert id="save">
+        INSERT INTO users (username, password)
+        VALUES (#{user.username}, #{user.password})
+    </insert>
+
+    <select id="findByUsername" resultType="User">
+        SELECT *
+        FROM users
+        WHERE username = #{username}
+        AND deleted_at IS NULL
+    </select>
+</mapper>

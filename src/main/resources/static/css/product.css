@@ -1,0 +1,39 @@
+.form-card-narrow {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.form-header {
+    margin-bottom: 24px;
+}
+
+.form-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.form-subtitle {
+    margin: 8px 0 0;
+    color: var(--color-muted);
+    font-size: 14px;
+}
+
+.form-block + .form-block {
+    margin-top: 20px;
+}
+
+.file-guide {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+.form-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}

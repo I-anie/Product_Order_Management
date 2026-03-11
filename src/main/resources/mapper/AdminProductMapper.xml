@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lumiera.shop.lumierashop.mapper.AdminProductMapper">
+
+    <sql id="productListColumn">
+        p.id, p.thumbnail_url, p.name, p.price, p.stock_quantity, p.created_at, c.type
+    </sql>
+
+    <sql id="productJoin">
+        FROM products p
+        JOIN categories c
+        ON p.category_id = c.id
+    </sql>
+
+    <sql id="findAllWhereCondition">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND p.name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND p.category_id = #{categoryId}
+            </if>
+            <choose>
+                <when test="deleted">
+                    AND p.deleted_at IS NOT NULL
+                </when>
+                <otherwise>
+                    AND p.deleted_at IS NULL
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="findAll" resultType="ProductListResponse">
+        SELECT
+        <include refid="productListColumn"/>
+        <include refid="productJoin"/>
+        <include refid="findAllWhereCondition"/>
+        ORDER BY
+        <choose>
+            <when test="deleted">
+                p.deleted_at DESC, p.id DESC
+            </when>
+            <otherwise>
+                p.id DESC
+            </otherwise>
+        </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO products (thumbnail_url, category_id, name, price, stock_quantity)
+        VALUES (#{product.thumbnailUrl}, #{product.categoryId},
+        #{product.name}, #{product.price}, #{product.stockQuantity})
+    </insert>
+
+    <select id="findById" resultType="ProductResponse">
+        SELECT
+        <include refid="productListColumn"/>,
+        p.updated_at,
+        p.deleted_at
+        <include refid="productJoin"/>
+        WHERE p.id = #{productId}
+    </select>
+
+    <update id="update">
+        UPDATE products
+        <set>
+            name = #{product.name},
+            price = #{product.price},
+            stock_quantity = #{product.stockQuantity},
+            category_id = #{product.categoryId}
+            <if test="product.thumbnailUrl != null">
+                , thumbnail_url = #{product.thumbnailUrl}
+            </if>
+        </set>
+        WHERE id = #{productId}
+    </update>
+
+    <update id="delete">
+        UPDATE products
+        SET deleted_at = CURRENT_TIMESTAMP
+        WHERE deleted_at IS NULL
+        AND id IN
+        <foreach item="productId" collection="productIds" open="(" close=")" separator=",">
+            #{productId}
+        </foreach>
+    </update>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM products p
+        <include refid="findAllWhereCondition"/>
+    </select>
+</mapper>

@@ -1,0 +1,126 @@
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.summary-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.admin-extra {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.total-box {
+    min-width: 220px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    text-align: right;
+}
+
+.order-list {
+    display: grid;
+    gap: 16px;
+}
+
+.order-card {
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.order-card-body {
+    padding: 20px;
+}
+
+.order-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.order-card-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 16px 0;
+}
+
+.order-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.order-detail-link,
+.order-card-link {
+    text-decoration: none;
+}
+
+.order-detail-link {
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+.order-search-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.order-search-form .form-control,
+.order-search-form .form-select {
+    min-width: 120px;
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bulk-action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .summary-grid,
+    .order-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-search-form {
+        align-items: stretch;
+    }
+
+    .date-range {
+        width: 100%;
+    }
+
+    .date-range .form-control {
+        width: 100%;
+    }
+
+    .total-box {
+        width: 100%;
+        text-align: left;
+    }
+}

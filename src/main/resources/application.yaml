@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: lumiera-shop
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/lumiera_shop
+    username: ${DS_USERNAME}
+    password: ${DS_PASSWORD}
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+file:
+  dir: C:/upload/images/
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.lumiera.shop.lumierashop.domain, com.lumiera.shop.lumierashop.dto
+  mapper-locations: classpath:/mapper/**/*.xml
+
+logging:
+  level:
+    root: INFO
+    com.lumiera.shop: DEBUG
+    org.springframework: INFO
+    org.springframework.security: DEBUG
+    org.mybatis: INFO
+    com.zaxxer.hikari: INFO
