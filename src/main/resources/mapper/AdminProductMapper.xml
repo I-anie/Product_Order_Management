@@ -59,6 +59,7 @@
     <select id="findById" resultType="ProductResponse">
         SELECT
         <include refid="productListColumn"/>,
+        c.id AS category_id,
         p.updated_at,
         p.deleted_at
         <include refid="productJoin"/>
